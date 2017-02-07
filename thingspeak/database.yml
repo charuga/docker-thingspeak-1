@@ -1,0 +1,9 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: true
+  database: thingspeak
+  pool: 5
+  username: thing
+  password: "speak"
+  host: mysql

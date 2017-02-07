@@ -1,0 +1,32 @@
+version: '2'
+services:
+    thingspeak:
+        build:
+            context: ./thingspeak
+        volumes:
+            - ./thingspeak/database.yml:/thingspeak/config/database.yml
+        ports:
+            - 80:3000
+        depends_on:
+            - mysql
+        links:
+            - mysql
+    mysql:
+        image: mariadb
+        volumes:
+            - ./mysql/:/var/lib/mysql
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=thingspeak
+            - MYSQL_USER=thing
+            - MYSQL_PASSWORD=speak
+    ## No SSL, may not safe to run on public server
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8080:80
+        links:
+            - mysql:db
+
